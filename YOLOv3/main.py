@@ -10,15 +10,15 @@ confThreshold = 0.5
 nmsThreshold = 0.3
 
 #Loads class names as classesFile and print them out
-classesFile = "coco.names"
+classesFile = "dummyphoneparts.names"
 classNames = []
 with open(classesFile, "rt") as f:
     classNames = f.read().rstrip("\n").split("\n")
 print(classNames)
 
 #Loads the YOLOv3 configuration file and weights as new variables
-modelConfiguration = "yolov3.cfg"
-modelWeights = "yolov3.weights"
+modelConfiguration = "yolov3tiny.cfg"
+modelWeights = "yolov3tiny44000.weights"
 
 #Create a darknet network based on the model configuration and weights based on opencv
 net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
