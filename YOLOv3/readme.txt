@@ -1,1 +1,1 @@
-the weights for yolov3 is too big
+This is the directory for YOLOv3.
