@@ -1,19 +1,17 @@
 from __future__ import division
-
 import re
 import sys
 import os
-
 from google.cloud import speech
-
 import pyaudio
 from six.moves import queue
 
 
-# Open Windows Power Shell and write below
-# $env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\jontr\Desktop\warm-ring-329409-5670d8a20123.json"'
-# then run this python script
-  
+#Open Windows Power Shell and write below
+#$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\victo\Desktop\P5-Baxter\SpeechRecognitionGoogle\warm-ring-329409-5670d8a20123.json"
+#then run this python script
+ #$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\victo\Desktop\P5-Baxter\SpeechRecognitionGoogle\baxtervoice-ed6f37715517.json"
+
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
@@ -132,7 +130,8 @@ def listen_print_loop(responses):
 
         else:
             print(transcript + overwrite_chars)
-
+            if ("hello baxter" in transcript.lower()):
+                print(transcript)
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
