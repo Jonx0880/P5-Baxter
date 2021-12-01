@@ -9,16 +9,14 @@ from baxter_tools.msg import assemblyAction, assemblyGoal
 def feedback_cb(msg):
 	print 'feedback recieved', msg
 
-def call_server():
+def call_server(component):
 	client = actionlib.SimpleActionClient('assembly', assemblyAction)
 	print'1'
 	client.wait_for_server()
 	print'2'
 	goal = assemblyGoal()
-	goal.components_needed.append('bottomCover')
-	goal.components_needed.append('PCB')
+	goal.components_needed.append(component)
 	
-
 	client.send_goal(goal, feedback_cb=feedback_cb)
 
 	client.wait_for_result()
@@ -27,13 +25,8 @@ def call_server():
 
 	return result
 
-if __name__ == '__main__':
-	try:
-		rospy.init_node('action_client')
-		result = call_server()
-		print 'The result is: ', result
-	except rospy.ROSInterruptException as e:
-		print 'something went wrong with: ', e
+#if __name__ == '__main__':
+
 
 
 

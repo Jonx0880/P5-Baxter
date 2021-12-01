@@ -26,20 +26,17 @@ class ActionServer:
 				self.server.set_preempted()
 				success = False
 				break
-			elif goal.components_needed[i] == 'bottomCover':
+			elif goal.components_needed[0] == 'bottomCover':
 				ik_client_example.bottom_cover_assemble()
 				last_component_installed = 'bottomCover'
-				print'1'
 			
 			elif goal.components_needed[i] == 'PCB':
 				ik_client_example.PCB_assemble()
 				last_component_installed = 'PCB'
-				print'2'
 
 			elif goal.components_needed[i] == 'topCover':
 				ik_client_example.top_cover_assemble()
 				last_component_installed = 'topCover'
-				print'3'
 
 
 			feedback.last_component_installed = last_component_installed

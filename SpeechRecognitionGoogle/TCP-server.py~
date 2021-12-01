@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 import SocketServer
-import phone
+import Phone
+import rospy
 class MyTCPHandler(SocketServer.BaseRequestHandler):
     """
     The request handler class for our server.
@@ -14,13 +17,15 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         print "{} wrote:".format(self.client_address[0])
         print self.data
-        phone.helloBaxter(self.data)
+        Phone.helloBaxter(self.data)
         # just send back the same data, but upper-cased
         self.request.sendall(self.data.upper())
  
 if __name__ == "__main__":
-    HOST, PORT = "172.20.66.72", 9999
- 
+    HOST, PORT = "172.20.66.58", 9999
+    try:
+    	rospy.init_node('action_client')
+    except rospy.ROSInterruptException as e:
     # Create the server, binding to localhost on port 9999
     server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
  

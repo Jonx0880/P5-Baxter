@@ -28,7 +28,7 @@ from baxter_core_msgs.srv import (
 
 class ik_service(object):
     def __init__(self, limb, speed=0.3):
-        #rospy.init_node("ik_service", anonymous=True)
+        rospy.init_node("ik_service", anonymous=True)
         self.ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
         self.iksvc = rospy.ServiceProxy(self.ns, SolvePositionIK)
 
