@@ -79,19 +79,19 @@ class baxter:
     previousJob = "I havent done anything yet"
     currentJobDetails = None
     previousJobDetail = None
-
-Phone = phone()
-talk = raw_input("Hi my name is baxter ")
-talk = talk.lower()
-if ("assemble" in talk or "make a phone" in talk):
-    Phone.placeBottom()
-    Order = order
-    order.installPcb = determinePcb(talk)
-    order.fuses = determineFuses(talk)
-    order.installCoverTop = determineTop(talk)
-    Phone.installPCB(order.installPcb)
-    Phone.installFuses(order.fuses)
-    Phone.placeTopCover(order.installCoverTop)
+    
+def helloBaxter(talk):
+    Phone = phone()
+    talk = talk.lower()
+    if ("assemble" in talk or "make a phone" in talk):
+        Phone.placeBottom()
+        Order = order
+        order.installPcb = determinePcb(talk)
+        order.fuses = determineFuses(talk)
+        order.installCoverTop = determineTop(talk)
+        Phone.installPCB(order.installPcb)
+        Phone.installFuses(order.fuses)
+        Phone.placeTopCover(order.installCoverTop)
 
 # while True:
 #     if talk == 
