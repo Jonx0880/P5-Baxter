@@ -5,7 +5,7 @@ import os
 from google.cloud import speech
 import pyaudio
 from six.moves import queue
-
+import TCP_client
 
 #Open Windows Power Shell and write below
 #$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\victo\Desktop\P5-Baxter\SpeechRecognitionGoogle\warm-ring-329409-5670d8a20123.json"
@@ -132,6 +132,7 @@ def listen_print_loop(responses):
             print(transcript + overwrite_chars)
             if ("hello baxter" in transcript.lower()):
                 print(transcript)
+                TCP_client.sendData(transcript)
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
