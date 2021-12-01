@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import time
 def determineFuses(command):
     if "fuse" in command or "fuses" in command:
