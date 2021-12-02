@@ -2,8 +2,22 @@
 
 import time
 import sys
+import json
+json_file = open('data.json')
+data = json.load(json_file)
 # some_file.py
 import sys
+#This list below is all the phrases that can be used to get information about a specific component
+specsList = ["tell me about","talk about", "specifications", "specs"] 
+highList = ["height", "tall", "how high"]
+widhtList = ["how wide", "width", "depth"]
+longList = ["how long", "length"]
+colorList = ["color"]
+weightList = ["weight", "how heavy"]
+materialList = ["material"]
+installationList = ["how to install", "how do you install", "installation"]
+purposeList = ["purpose", "function","functionality"]
+
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
@@ -96,6 +110,8 @@ class baxter:
 def helloBaxter(talk):
     Phone = phone()
     talk = talk.lower()
+    tempList = specsList + widhtList + longList + colorList + weightList + materialList + installationList + purposeList
+
     if ("assemble" in talk or "make a phone" in talk):
         Phone.placeBottom()
         Order = order
@@ -105,6 +121,16 @@ def helloBaxter(talk):
         Phone.installPCB(order.installPcb)
         Phone.installFuses(order.fuses)
         Phone.placeTopCover(order.installCoverTop)
+    elif any(x in talk for x in tempList):
+        for x in data:
+            if (data[x]["type"].lower() in talk):
+                if (x in talk for x in highList):
+                    print(data[x]["type"] +" is "+data[x]["height"]+ "mm tall")
+                elif (x in talk for x in specsList):
+                    print("FUCK")
+
 
 # while True:
 #     if talk == 
+talks = input("Prompt:")
+helloBaxter(talks)
