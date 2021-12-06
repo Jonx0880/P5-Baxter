@@ -133,6 +133,8 @@ def listen_print_loop(responses):
             if ("hello baxter" in transcript.lower()):
                 print(transcript)
                 TCP_client.sendData(transcript)
+            elif ("switch" in transcript.lower() and "text" in transcript.lower()):
+                textBased()
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
@@ -140,7 +142,13 @@ def listen_print_loop(responses):
                 break
 
             num_chars_printed = 0
-
+def textBased():
+    print("\n\n\n\n\n\n\n\n\n\nHello I am Baxter. \n")
+    while True:
+        transcript = input("What do you want me to do? \n")
+        if ("switch" in transcript and "voice" in transcript):
+            return false
+        TCP_client.sendData(transcript)
 
 def main():
     # See http://g.co/cloud/speech/docs/languages
