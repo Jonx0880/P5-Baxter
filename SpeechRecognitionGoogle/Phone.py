@@ -18,7 +18,7 @@ weightList = ["weight", "how heavy"]
 materialList = ["material"]
 installationList = ["how to install", "how do you install", "installation"]
 purposeList = ["purpose", "function","functionality"]
-showMe["show me", "where is", "look like"]
+showMe = ["show me", "where is", "look like"]
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
@@ -111,7 +111,7 @@ class baxter:
 def helloBaxter(talk):
     Phone = phone()
     talk = talk.lower()
-    tempList = specsList + widthList + longList + colorList + weightList + materialList + installationList + purposeList
+    tempList = specsList + highList + longList + widthList + longList + colorList + weightList + materialList + installationList + purposeList
     response = ""
     if any(x in talk for x in dummyphoneList):
         Phone.placeBottom()
@@ -125,24 +125,26 @@ def helloBaxter(talk):
     elif any(x in talk for x in tempList):
         for x in data:
             if (data[x]["type"].lower() in talk):
-                if (x in talk for x in highList):
+                if any(x in talk for x in highList):
                     response = (data[x]["type"] +" is "+data[x]["height"]+ "mm tall")
-                elif (x in talk for x in widthList):
+                elif any(x in talk for x in widthList):
                     response = (data[x]["type"] +" is "+data[x]["width"]+ "mm wide")
-                elif (x in talk for x in longList):
+                elif any(x in talk for x in longList):
                     response = (data[x]["type"] +" is "+data[x]["length"]+ "mm long")
-                elif (x in talk for x in colorList):
+                elif any(x in talk for x in colorList):
                     response = (data[x]["type"] +" is "+data[x]["colors"])
-                elif (x in talk for x in materialList):
+                elif any(x in talk for x in materialList):
                     response = (data[x]["type"] +" is made from "+data[x]["materials"])
-                elif (x in talk for x in installationList):
+                elif any(x in talk for x in installationList):
                     response = (data[x]["type"] +" "+data[x]["installation"])
-                elif (x in talk for x in purposeList):
+                elif any(x in talk for x in purposeList):
                     response = (data[x]["type"] +"'s purpose is "+data[x]["purpose"]+ "mm wide")
-                elif (x in talk for x in specsList):
-                    response = ("All the specs for the "data[x]["type"] +" is width:"+data[x]["width"]+ "mm. height:"+data[x]["height"]+ "mm. Length:"+data[x]["length"]+
-                    "mm color:"+data[x]["colors"]+ "weight:"+data[x]["weight"]+ "grams. material:"+data[x]["material"]+ "installation:"+data[x]["installation"]+ 
-                    "Purpose:"+data[x]["purpose"])
+                elif any(x in talk for x in weightList):
+                    response = (data[x]["type"] +" weighs "+data[x]["weight"]+ " grams")    
+                elif any(x in talk for x in specsList):
+                    response = ("All the specs for the "+data[x]["type"] +" is width:"+data[x]["width"]+ "mm. height: "+data[x]["height"]+ "mm. Length:"
+                    +data[x]["length"]+"mm color:"+data[x]["colors"]+ "weight:"+data[x]["weight"]+ " grams. material: "+data[x]["material"]+ " installation:"+data[x]["installation"]+ 
+                    " Purpose:"+data[x]["purpose"])
     elif any(x in talk for x in showMe):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -151,7 +153,3 @@ def helloBaxter(talk):
     elif any(x in talk for x in showMe):
         print "Proceeding"
     print(response)
-                    
-
-talks = input("Prompt:")
-helloBaxter(talks)
