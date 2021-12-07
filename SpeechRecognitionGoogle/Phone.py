@@ -19,6 +19,10 @@ materialList = ["material"]
 installationList = ["how to install", "how do you install", "installation"]
 purposeList = ["purpose", "function","functionality"]
 showMe = ["show me", "where is", "look like"]
+stopList = ["stop", "pause"]
+continueList = ["continue"]
+yesList = ["yes", "yeah"]
+noList = ["no", "nope"]
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
@@ -150,6 +154,12 @@ def helloBaxter(talk):
             if (data[x]["type"].lower() in talk):
                 #TODO, make baxter show component on screen and point to it
                 print(data[x]["type"] + "Is here")
-    elif any(x in talk for x in showMe):
+    elif any(x in talk for x in stopList):
+        print "Proceeding"
+    elif any(x in talk for x in continueList):
+        print "Proceeding"
+    elif any(x in talk for x in noList):
+        print "Proceeding"
+    elif any(x in talk for x in yesList):
         print "Proceeding"
     print(response)
