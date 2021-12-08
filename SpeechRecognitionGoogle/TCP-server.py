@@ -19,7 +19,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         print self.data
         Phone.helloBaxter(self.data)
         # just send back the same data, but upper-cased
-        self.request.sendall(self.data.upper())
+        self.request.sendall(self.data)
  
 if __name__ == "__main__":
     HOST, PORT = "172.20.66.58", 9999

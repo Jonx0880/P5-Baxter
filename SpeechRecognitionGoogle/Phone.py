@@ -8,7 +8,7 @@ data = json.load(json_file)
 # some_file.py
 import sys
 #This list below is all the phrases that can be used to get information about a specific component
-dummyphoneList = ["assemble a dummyphone", "assemble dummyphone", "assemble the dummyphone", "make a phone", "do a demo", "do a demonstration"]
+dummyphoneList = ["assemble a dummyphone", "assemble dummyphone", "assemble the dummyphone", "make a phone", "do a demo", "do a demonstration", "assemble a phone", "assemble phone"]
 specsList = ["tell me about","talk about", "specifications", "specs"] 
 highList = ["height", "tall", "how high"]
 widthList = ["how wide", "width", "depth"]
@@ -26,7 +26,9 @@ noList = ["no", "nope"]
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
+import ik_client_example
 import ActionClient
+import vision
 
 def determineFuses(command):
     if "fuse" in command or "fuses" in command:
@@ -76,31 +78,39 @@ def determinePcb(command):
         return True
 
 class phone:
+    print'phone'
     pcbInstalled = False  
     bottomPlaced = False
     fusesInstalled = False
     topCoverInstalled = False  
+    components = []
+    print'phone setup'
     def installFuses(self, amount = 2):
         if self.pcbInstalled == True:
             print("Installing " + str(amount) + " fuses")
+	    self.components.append('fuse')
         else:
             print("Can not install fuses without pcb")     
     def placeBottom(self):
         self.bottomPlaced = True
         print("Placing up bottom")
-	ActionClient.call_server('bottomCover')
+	self.components.append('bottomCover_pickUp')
+	self.components.append('bottomCover_assemble')
     def installPCB(self, install):
         if self.bottomPlaced and install:
             self.pcbInstalled = True
-	    ActionClient.call_server('PCB')
+	    self.components.append('PCB_pickUp')
+	    self.components.append('PCB_assemble')
             print("Installing PCB")
     def placeTopCover(self, install):
         if self.bottomPlaced and install:
             self.topCoverInstalled = True
-	    ActionClient.call_server('topCover')
+	    self.components.append('topCover_pickUp')
+	    self.components.append('topCover_assemble')
             print("Installing top cover")
         else:
             print("Will not install topcover")
+    
 class order:
     fuses = 2
     installPcb = True
@@ -113,11 +123,13 @@ class baxter:
     previousJobDetail = None
     
 def helloBaxter(talk):
+    print'hello baxter'
     Phone = phone()
     talk = talk.lower()
     tempList = specsList + highList + longList + widthList + longList + colorList + weightList + materialList + installationList + purposeList
     response = ""
     if any(x in talk for x in dummyphoneList):
+	Phone.components = []
         Phone.placeBottom()
         Order = order
         order.installPcb = determinePcb(talk)
@@ -126,6 +138,7 @@ def helloBaxter(talk):
         Phone.installPCB(order.installPcb)
         Phone.installFuses(order.fuses)
         Phone.placeTopCover(order.installCoverTop)
+	ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -153,11 +166,26 @@ def helloBaxter(talk):
         for x in data:
             if (data[x]["type"].lower() in talk):
                 #TODO, make baxter show component on screen and point to it
-                print(data[x]["type"] + "Is here")
+		ik_client_example.pointAt(data[x]["type"])
+		if data[x]["type"] == 'bottom cover':
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
+
+		if data[x]["type"] == 'top cover':
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
+			
+		if data[x]["type"] == 'PCB':
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/pcb.png')
+
+		if data[x]["type"] == 'fuse':
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/fuse.png')
+                print(data[x]["type"] + " Is here")
+
     elif any(x in talk for x in stopList):
         print "Proceeding"
+	ActionClient.cancel_goal()
     elif any(x in talk for x in continueList):
         print "Proceeding"
+	ActionClient.continue_goal()
     elif any(x in talk for x in noList):
         print "Proceeding"
     elif any(x in talk for x in yesList):
