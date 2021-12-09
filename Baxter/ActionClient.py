@@ -39,10 +39,11 @@ def cancel_goal():
 
 def continue_goal():
 	print 'goal'	
+	print goal.components_needed
 	string = str(feedback.last_component_installed)
 	#	print string
 	string = string.split()[-1]
-#	print string
+	print string
 #	print goal.components_needed.index(string)
 #	print goal.components_needed[0]
 #	print goal.components_needed[0+1]
@@ -55,6 +56,7 @@ def continue_goal():
 		client.send_goal(goal, feedback_cb=feedback_cb)
 	else:
 		print 'not sending goal'
+		client.send_goal(goal, feedback_cb=feedback_cb)
 
 
 

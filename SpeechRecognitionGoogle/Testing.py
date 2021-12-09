@@ -16,7 +16,8 @@ rospy.init_node('action_client')
 #time.sleep(2)
 vision.take_image()
 components = vision.componentRegonition()
-print components[2]
+print components[0]
+print components[1]
 #print components
 #vision.send_image('/home/jimmi/ros_ws/camera_image.jpeg')
 ###### make code that checks if needed components are precent in components list #########

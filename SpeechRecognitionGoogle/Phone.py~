@@ -19,6 +19,7 @@ materialList = ["material"]
 installationList = ["how to install", "how do you install", "installation"]
 purposeList = ["purpose", "function","functionality"]
 showMe = ["show me", "where is", "look like"]
+pickUpList = ["hand me", "give me", "reach me"]
 stopList = ["stop", "pause"]
 continueList = ["continue"]
 yesList = ["yes", "yeah"]
@@ -170,16 +171,27 @@ def helloBaxter(talk):
 		if data[x]["type"] == 'bottom cover':
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
 
-		if data[x]["type"] == 'top cover':
+		elif data[x]["type"] == 'top cover':
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
-		if data[x]["type"] == 'PCB':
+		elif data[x]["type"] == 'PCB':
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/pcb.png')
 
-		if data[x]["type"] == 'fuse':
+		elif data[x]["type"] == 'fuse':
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/fuse.png')
                 print(data[x]["type"] + " Is here")
+    elif any(x in talk for x in pickUpList):
+        for x in data:
+            if (data[x]["type"].lower() in talk):
+		print'pickUp'
+		if data[x]["type"] == 'bottom cover':
+			ik_client_example.bottom_cover_pickUp()
 
+		elif data[x]["type"] == 'top cover':
+			ik_client_example.top_cover_pickUp()
+			
+		elif data[x]["type"] == 'PCB':
+			ik_client_example.PCB_pickUp()
     elif any(x in talk for x in stopList):
         print "Proceeding"
 	ActionClient.cancel_goal()

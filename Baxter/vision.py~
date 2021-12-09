@@ -26,19 +26,20 @@ def componentRegonition():
 	meanBottomCover = cv2.mean(bottomCover)
 	meanPCB = cv2.mean(PCB)
 
+	print meanTopCover
 	if meanTopCover[0] > 250 and meanTopCover[1] > 250 and meanTopCover[2] > 250:
 		components.append('whiteTopCover')
-	#elif meanTopCover[0] > 250 and meanTopCover[1] > 250 and meanTopCover[2] > 250: change values in if statements to match color of covers
-	#	components.append('blueTopCover')
-	#elif meanTopCover[0] > 250 and meanTopCover[1] > 250 and meanTopCover[2] > 250: 
-	#	components.append('blackTopCover')
+	elif meanTopCover[0] > 50 and meanTopCover[1] > 30 and meanTopCover[2] < 50 : 
+		components.append('blueTopCover')
+	elif meanTopCover[0] < 40 and meanTopCover[1] < 40 and meanTopCover[2] < 40: 
+		components.append('blackTopCover')
 	else: components.append('missing')
 
 	if 20 < meanBottomCover[0] < 40 and 20 < meanBottomCover[1] < 40 and 20 < meanBottomCover[2] < 40:
 		components.append('BottomCover')
 	else: components.append('missing')	
-	print meanPCB
-	if 40 < meanPCB[0] < 50 and 40 < meanPCB[1] < 55 and 30 < meanPCB[2] < 40:
+	#print meanPCB
+	if  meanPCB[1] > meanPCB[2]+5:
 		components.append('PCB')
 	else: components.append('missing')
 

@@ -24,12 +24,15 @@ class ActionServer:
 		vision.take_image()
 		component = vision.componentRegonition()
 		componentPresent = True
-		visin.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
+		vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
 		if component[1] == 'missing' and  'bottomCover_pickUp' in goal.components_needed:
 			print 'Bottom cover is missing, place Bottom cover in fixture'
 			componentPresent = False
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
 			
+		
+
+
 		if component[0] == 'missing' and  'topCover_pickUp' in goal.components_needed:
 			print 'Top cover is missing, place Top cover in fixture'
 			componentPresent = False
@@ -43,7 +46,7 @@ class ActionServer:
 		
 
 		if componentPresent == True:
-			vision('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
 			for i in range(0,int(len(goal.components_needed))):
 				if self.server.is_preempt_requested():
 					self.server.set_preempted(last_component_installed)
