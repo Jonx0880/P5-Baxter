@@ -103,7 +103,7 @@ class phone:
 	    self.components.append('PCB_pickUp')
 	    self.components.append('PCB_assemble')
             print("Installing PCB")
-    def placeTopCover(self, install):
+    def placeTopCover(self, install, talk):
         if self.bottomPlaced and install:
             self.topCoverInstalled = True
             if "blue" in talk:
@@ -146,7 +146,7 @@ def helloBaxter(talk):
         order.installCoverTop = determineTop(talk)
         Phone.installPCB(order.installPcb)
         Phone.installFuses(order.fuses)
-        Phone.placeTopCover(order.installCoverTop)
+        Phone.placeTopCover(order.installCoverTop, talk)
 	ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
