@@ -106,8 +106,16 @@ class phone:
     def placeTopCover(self, install):
         if self.bottomPlaced and install:
             self.topCoverInstalled = True
-	    self.components.append('topCover_pickUp')
-	    self.components.append('topCover_assemble')
+            if "blue" in talk:
+                color="blue"
+            elif "black" in talk:
+                color="black"
+            elif "white" in talk:
+                color="white"
+            else:
+                color=""
+	        self.components.append(color+'topCover_pickUp')
+	        self.components.append('topCover_assemble')
             print("Installing top cover")
         else:
             print("Will not install topcover")
