@@ -31,7 +31,7 @@ def componentRegonition():
 		components.append('whiteTopCover')
 	elif meanTopCover[0] > 50 and meanTopCover[1] > 30 and meanTopCover[2] < 50 : 
 		components.append('blueTopCover')
-	elif meanTopCover[0] < 40 and meanTopCover[1] < 40 and meanTopCover[2] < 40: 
+	elif meanTopCover[0] < 50 and meanTopCover[1] < 50 and meanTopCover[2] < 50: 
 		components.append('blackTopCover')
 	else: components.append('missing')
 

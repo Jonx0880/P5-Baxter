@@ -21,6 +21,7 @@ client = actionlib.SimpleActionClient('assembly', assemblyAction)
 def call_server(components = []):
 	print'1'
 	goal.components_needed = []
+	feedback.last_component_installed = ''
 	client.wait_for_server()
 	print'2'
 	
@@ -38,11 +39,13 @@ def cancel_goal():
 	client.cancel_goal()
 
 def continue_goal():
-	print 'goal'	
+	print 'goal1'	
 	print goal.components_needed
+	print feedback.last_component_installed
 	string = str(feedback.last_component_installed)
-	#	print string
-	string = string.split()[-1]
+	print string
+	if string != '':
+		string = string.split()[-1]
 	print string
 #	print goal.components_needed.index(string)
 #	print goal.components_needed[0]

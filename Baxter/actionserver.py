@@ -29,15 +29,45 @@ class ActionServer:
 			print 'Bottom cover is missing, place Bottom cover in fixture'
 			componentPresent = False
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
-			
+				
 		
 
 
-		if component[0] == 'missing' and  'topCover_pickUp' in goal.components_needed:
-			print 'Top cover is missing, place Top cover in fixture'
-			componentPresent = False
+#		if component[0] == 'whiteTopCover' or component[0] == 'blueTopCover' or components[0] == 'blackTopCover' and  'topCover_pickUp' in goal.components_needed:
+		print component[0]
+		print goal.components_needed
+		if component[0] == 'missing' and 'topCover_pickUp' in goal.components_needed:
+			componentPresent = False			
+			print 'top cover is missing, please put top cover in fixture'
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
+
+		if component[0] != 'whiteTopCover' and 'whitetopCover_pickUp' in goal.components_needed:
+			componentPresent = False
+			print 'white top cover is missing, please put a white top cover in the fixture'
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
+			
+#		if component[0] == 'missing' and 'whiteTopCover_pickUp' in goal.components_needed:
+
+		
+		if component[0] != 'blueTopCover' and 'bluetopCover_pickUp' in goal.components_needed:
+			componentPresent = False			
+			print 'blue top cover is missing, please put a blue top cover in the fixture'
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
+
+#		if component[0] == 'missing' and 'blueTopCover_pickUp' in goal.components_needed:
+			
+
+		if  component[0] != 'blackTopCover' and 'blacktopCover_pickUp' in goal.components_needed:
+			componentPresent = False			
+			print 'black top cover is missing, please put a black top cover in the fixture'
+			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
+			
+			
+#		if component[0] == 'missing' and 'blackTopCover_pickUp' in goal.components_needed:
+
+
+
 		if component[2] == 'missing' and  'PCB_pickUp' in goal.components_needed:
 			print 'PCB is missing, place PCB in fixture or assemble without PCB'
 			componentPresent = False
@@ -78,7 +108,7 @@ class ActionServer:
 					print 'would you install the fuses pls'
 					self.server.set_preempted(last_component_installed)
 
-				elif goal.components_needed[i] == 'topCover_pickUp':
+				elif goal.components_needed[i] == 'topCover_pickUp' or goal.components_needed[i] == 'blacktopCover_pickUp' or goal.components_needed[i] == 'whitetopCover_pickUp' or goal.components_needed[i] == 'bluetopCover_pickUp':
 					ik_client_example.top_cover_pickUp()
 					last_component_installed = 'topCover_pickUp'
 

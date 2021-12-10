@@ -103,11 +103,19 @@ class phone:
 	    self.components.append('PCB_pickUp')
 	    self.components.append('PCB_assemble')
             print("Installing PCB")
-    def placeTopCover(self, install):
+    def placeTopCover(self, install, talk):
         if self.bottomPlaced and install:
             self.topCoverInstalled = True
-	    self.components.append('topCover_pickUp')
-	    self.components.append('topCover_assemble')
+            if "blue" in talk:
+                color="blue"
+            elif "black" in talk:
+                color="black"
+            elif "white" in talk:
+                color="white"
+            else:
+                color=""
+	        self.components.append(color+'topCover_pickUp')
+	        self.components.append('topCover_assemble')
             print("Installing top cover")
         else:
             print("Will not install topcover")
@@ -138,7 +146,7 @@ def helloBaxter(talk):
         order.installCoverTop = determineTop(talk)
         Phone.installPCB(order.installPcb)
         Phone.installFuses(order.fuses)
-        Phone.placeTopCover(order.installCoverTop)
+        Phone.placeTopCover(order.installCoverTop, talk)
 	ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
@@ -183,7 +191,6 @@ def helloBaxter(talk):
     elif any(x in talk for x in pickUpList):
         for x in data:
             if (data[x]["type"].lower() in talk):
-		print'pickUp'
 		if data[x]["type"] == 'bottom cover':
 			ik_client_example.bottom_cover_pickUp()
 
