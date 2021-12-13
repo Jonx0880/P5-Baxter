@@ -6,6 +6,10 @@ import actionlib
 import ik_client_example
 from baxter_tools.msg import assemblyAction, assemblyFeedback, assemblyResult
 import vision
+import sys
+sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/SpeechRecognitionGoogle')
+import talk
+
 
 class ActionServer:
 	def __init__(self):
@@ -16,7 +20,7 @@ class ActionServer:
 	def execute(self, goal):
 	# Do lots of awesome groundbreaking robot stuff here
 		success = True
-		print'1'
+		talk.talk('phoneAssembly')
 		last_component_installed = ''
 		feedback = assemblyFeedback()
 		result = assemblyResult()
@@ -26,7 +30,7 @@ class ActionServer:
 		componentPresent = True
 		vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
 		if component[1] == 'missing' and  'bottomCover_pickUp' in goal.components_needed:
-			print 'Bottom cover is missing, place Bottom cover in fixture'
+			talk.talk('Bottom cover is missing please place Bottom cover in fixture')
 			componentPresent = False
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
 				
@@ -38,13 +42,13 @@ class ActionServer:
 		print goal.components_needed
 		if component[0] == 'missing' and 'topCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			print 'top cover is missing, please put top cover in fixture'
+			talk.talk('Top cover is missing please place Top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 
 		if component[0] != 'whiteTopCover' and 'whitetopCover_pickUp' in goal.components_needed:
 			componentPresent = False
-			print 'white top cover is missing, please put a white top cover in the fixture'
+			talk.talk('White top cover is missing please place a white top cover in the fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 #		if component[0] == 'missing' and 'whiteTopCover_pickUp' in goal.components_needed:
@@ -52,7 +56,7 @@ class ActionServer:
 		
 		if component[0] != 'blueTopCover' and 'bluetopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			print 'blue top cover is missing, please put a blue top cover in the fixture'
+			talk.talk('Blue top cover is missing please place a blue top cover in the fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 
 #		if component[0] == 'missing' and 'blueTopCover_pickUp' in goal.components_needed:
@@ -60,7 +64,7 @@ class ActionServer:
 
 		if  component[0] != 'blackTopCover' and 'blacktopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			print 'black top cover is missing, please put a black top cover in the fixture'
+			talk.talk('Black top cover is missing please place a black top cover in the fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 			
@@ -69,7 +73,7 @@ class ActionServer:
 
 
 		if component[2] == 'missing' and  'PCB_pickUp' in goal.components_needed:
-			print 'PCB is missing, place PCB in fixture or assemble without PCB'
+			talk.talk('PCB is missing please place PCB in fixture')
 			componentPresent = False
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/pcb.png')
 			
@@ -105,7 +109,7 @@ class ActionServer:
 					last_component_installed = 'fuse'
 					feedback.last_component_installed = last_component_installed
 					self.server.publish_feedback(feedback)
-					print 'would you install the fuses pls'
+					talk.talk('Please install the fuse as seen on the image displayed on screen')
 					self.server.set_preempted(last_component_installed)
 
 				elif goal.components_needed[i] == 'topCover_pickUp' or goal.components_needed[i] == 'blacktopCover_pickUp' or goal.components_needed[i] == 'whitetopCover_pickUp' or goal.components_needed[i] == 'bluetopCover_pickUp':

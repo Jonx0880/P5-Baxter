@@ -11,7 +11,7 @@ rate = engine.getProperty('rate')
 print (rate) 
 engine.setProperty('rate',125)
 def talk(key):
-    json_file = open('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/SpeechRecognitionGoogle/talk.json')
+    json_file = open('talk.json')
     data = json.load(json_file)
     engine.say(data[key])
     engine.runAndWait()

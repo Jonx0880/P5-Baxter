@@ -3,6 +3,7 @@
 import time
 import sys
 import json
+import talk
 json_file = open('data.json')
 data = json.load(json_file)
 # some_file.py
@@ -19,7 +20,7 @@ materialList = ["material"]
 installationList = ["how to install", "how do you install", "installation"]
 purposeList = ["purpose", "function","functionality"]
 showMe = ["show me", "where is", "look like"]
-pickUpList = ["hand me", "give me", "reach me"]
+pickUpList = ["hand me", "give me", "reach me", "pick up"]
 stopList = ["stop", "pause"]
 continueList = ["continue"]
 yesList = ["yes", "yeah"]
@@ -188,6 +189,7 @@ def helloBaxter(talk):
     elif any(x in talk for x in pickUpList):
         for x in data:
             if (data[x]["type"].lower() in talk):
+		print "testing"
 		if data[x]["type"] == 'bottom cover':
 			ik_client_example.bottom_cover_pickUp()
 
@@ -195,6 +197,7 @@ def helloBaxter(talk):
 			ik_client_example.top_cover_pickUp()
 			
 		elif data[x]["type"] == 'PCB':
+			print "pick up pcb"
 			ik_client_example.PCB_pickUp()
     elif any(x in talk for x in stopList):
         print "Proceeding"
@@ -208,4 +211,5 @@ def helloBaxter(talk):
         print "Proceeding"
     elif any(x in talk for x in statusList):
         print "proceeding"
+	ActionClient.current_action()
     print(response)

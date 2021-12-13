@@ -75,10 +75,11 @@ class gripper:
 		print ("Gripper parameters: ",gripper.parameters())
 		time.sleep(0.5)
 		if grip == 1:
-			gripper.close(False,100)	
+			gripper.close(False,50)	
 		elif grip == 0:
 			gripper.open()
 def PCB_pickUp():
+	print "picking up pcb"
 	ik_move('left', 0.668666615156,0.159488855161,0.10,0.0,1.0,0.0,0.0) # Above pcb
 	ik_move('left', 0.660130532232,0.160065985279,0.0380676342796,0,1.0,0,0) # on pcb ready to pick up
 	gripper('left',1)	
