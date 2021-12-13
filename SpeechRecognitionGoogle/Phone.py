@@ -24,6 +24,8 @@ stopList = ["stop", "pause"]
 continueList = ["continue"]
 yesList = ["yes", "yeah"]
 noList = ["no", "nope"]
+statusList = ["what are you doing", "whats up", "what you doing"]
+
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
@@ -125,12 +127,7 @@ class order:
     installPcb = True
     installCoverBottom = True
     installCoverTop = True
-class baxter:
-    currentJob = "Nothing"
-    previousJob = "I havent done anything yet"
-    currentJobDetails = None
-    previousJobDetail = None
-    
+
 def helloBaxter(talk):
     print'hello baxter'
     Phone = phone()
@@ -209,4 +206,6 @@ def helloBaxter(talk):
         print "Proceeding"
     elif any(x in talk for x in yesList):
         print "Proceeding"
+    elif any(x in talk for x in statusList):
+        print "proceeding"
     print(response)

@@ -147,7 +147,7 @@ def textBased():
     while True:
         transcript = input("What do you want me to do? \n")
         if ("switch" in transcript and "voice" in transcript):
-            return false
+            return False
         TCP_client.sendData(transcript)
 
 def main():
