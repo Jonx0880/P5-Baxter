@@ -98,8 +98,8 @@ class phone:
     def placeBottom(self):
         self.bottomPlaced = True
         print("Placing up bottom")
-	self.components.append('bottomCover_pickUp')
-	self.components.append('bottomCover_assemble')
+        self.components.append('bottomCover_pickUp')
+        self.components.append('bottomCover_assemble')
     def installPCB(self, install):
         if self.bottomPlaced and install:
             self.pcbInstalled = True
@@ -117,18 +117,12 @@ class phone:
                 color="white"
             else:
                 color=""
-	    self.components.append(color+'topCover_pickUp')
-	    self.components.append('topCover_assemble')
-            print("Installing top cover")
-        else:
-            print("Will not install topcover")
+            self.components.append(color+'topCover_pickUp')
+            self.components.append('topCover_assemble')
+                print("Installing top cover")
+            else:
+                print("Will not install topcover")
     
-class order:
-    fuses = 2
-    installPcb = True
-    installCoverBottom = True
-    installCoverTop = True
-
 def helloBaxter(talk):
     print'hello baxter'
     Phone = phone()
@@ -138,13 +132,9 @@ def helloBaxter(talk):
     if any(x in talk for x in dummyphoneList):
 	Phone.components = []
         Phone.placeBottom()
-        Order = order
-        order.installPcb = determinePcb(talk)
-        order.fuses = determineFuses(talk)
-        order.installCoverTop = determineTop(talk)
-        Phone.installPCB(order.installPcb)
-        Phone.installFuses(order.fuses)
-        Phone.placeTopCover(order.installCoverTop, talk)
+        Phone.installPCB(determinePcb(talk))
+        Phone.installFuses(determineFuses(talk))
+        Phone.placeTopCover(determineTop(talk), talk)
 	ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
@@ -211,5 +201,5 @@ def helloBaxter(talk):
         print "Proceeding"
     elif any(x in talk for x in statusList):
         print "proceeding"
-	ActionClient.current_action()
+	    ActionClient.current_action()
     print(response)
