@@ -161,19 +161,12 @@ def helloBaxter(talk):
         for x in data:
             if (data[x]["type"].lower() in talk):
                 #TODO, make baxter show component on screen and point to it
-		ik_client_example.pointAt(data[x]["type"])
-		if data[x]["type"] == 'bottom cover':
-			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/bottomcover.png')
-
-		elif data[x]["type"] == 'top cover':
-			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
-			
-		elif data[x]["type"] == 'PCB':
-			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/pcb.png')
-
-		elif data[x]["type"] == 'fuse':
-			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/fuse.png')
-                
+		        ik_client_example.pointAt(data[x]["type"])
+                component = data[x]["type"]
+                component.replace(" ","")
+                component = component.lower()
+                vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/'+component+'.png')
+     
     elif any(x in talk for x in pickUpList):
         for x in data:
             if (data[x]["type"].lower() in talk):
