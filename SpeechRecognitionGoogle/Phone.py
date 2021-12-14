@@ -103,9 +103,8 @@ class phone:
     def installPCB(self, install):
         if self.bottomPlaced and install:
             self.pcbInstalled = True
-	    self.components.append('PCB_pickUp')
-	    self.components.append('PCB_assemble')
-            print("Installing PCB")
+            self.components.append('PCB_pickUp')
+            self.components.append('PCB_assemble')
     def placeTopCover(self, install, talk):
         if self.bottomPlaced and install:
             self.topCoverInstalled = True
@@ -124,18 +123,17 @@ class phone:
                 print("Will not install topcover")
     
 def helloBaxter(talk):
-    print'hello baxter'
-    Phone = phone()
     talk = talk.lower()
     tempList = specsList + highList + longList + widthList + longList + colorList + weightList + materialList + installationList + purposeList
     response = ""
     if any(x in talk for x in dummyphoneList):
-	Phone.components = []
+        Phone = phone()
+	    Phone.components = []
         Phone.placeBottom()
         Phone.installPCB(determinePcb(talk))
         Phone.installFuses(determineFuses(talk))
         Phone.placeTopCover(determineTop(talk), talk)
-	ActionClient.call_server(Phone.components)
+	    ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -175,7 +173,7 @@ def helloBaxter(talk):
 
 		elif data[x]["type"] == 'fuse':
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/fuse.png')
-                print(data[x]["type"] + " Is here")
+                
     elif any(x in talk for x in pickUpList):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -191,10 +189,10 @@ def helloBaxter(talk):
 			ik_client_example.PCB_pickUp()
     elif any(x in talk for x in stopList):
         print "Proceeding"
-	ActionClient.cancel_goal()
+	    ActionClient.cancel_goal()
     elif any(x in talk for x in continueList):
         print "Proceeding"
-	ActionClient.continue_goal()
+	    ActionClient.continue_goal()
     elif any(x in talk for x in noList):
         print "Proceeding"
     elif any(x in talk for x in yesList):
