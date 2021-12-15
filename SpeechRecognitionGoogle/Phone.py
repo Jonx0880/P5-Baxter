@@ -112,11 +112,11 @@ class phone:
                 color="white"
             else:
                 color=""
-            self.components.append(color+'topCover_pickUp')
-            self.components.append('topCover_assemble')
+                self.components.append(color+'topCover_pickUp')
+                self.components.append('topCover_assemble')
                 print("Installing top cover")
-            else:
-                print("Will not install topcover")
+        else:
+            print("Will not install topcover")
     
 def helloBaxter(talk):
     talk = talk.lower()
