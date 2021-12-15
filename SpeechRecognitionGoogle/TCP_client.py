@@ -1,7 +1,7 @@
 import socket
 import sys
 def sendData(speech):
-    HOST, PORT = "172.20.66.58", 50007
+    HOST, PORT = "172.20.66.61", 50007
     data = "".join(sys.argv[1:])
 
     # Create a socket (SOCK_STREAM means a TCP socket)

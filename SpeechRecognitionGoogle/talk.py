@@ -15,3 +15,6 @@ def talk(key):
     data = json.load(json_file)
     engine.say(data[key])
     engine.runAndWait()
+def talk_raw(key):
+    engine.say(key)
+    engine.runAndWait()
