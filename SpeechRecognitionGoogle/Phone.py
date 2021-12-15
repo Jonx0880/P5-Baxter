@@ -35,21 +35,19 @@ import ActionClient
 import vision
 
 def determineFuses(command):
-    if "fuse" in command or "fuses" in command:
+        if "fuse" in command or "fuses" in command:
         commandList = command.split(" ")
         try:
-            fusePlacement = commandList.index("fuse")
+            commandPlacement = commandList.index("fuse")
         except:
-            fusePlacement = commandList.index("fuses")
-        commandList = (command.split(' ')[fusePlacement-2: fusePlacement+2])
+            commandPlacement = commandList.index("fuses")
+        commandList = (command.split(' ')[commandPlacement-2: commandPlacement+2])
         if "0" in commandList or "without" in commandList or "zero" in commandList or "no" in commandList:
             return 0
         elif "1" in commandList or "one" in commandList or "single" in commandList:
             return 1
         else:
             return 2
-    else:
-        return 2
 
 def determineTop(command):
     if "top" in command or "top cover" in command or "topcover" in command:
@@ -82,13 +80,11 @@ def determinePcb(command):
         return True
 
 class phone:
-    print'phone'
     pcbInstalled = False  
     bottomPlaced = False
     fusesInstalled = False
     topCoverInstalled = False  
     components = []
-    print'phone setup'
     def installFuses(self, amount = 2):
         if self.pcbInstalled == True:
             print("Installing " + str(amount) + " fuses")
