@@ -86,9 +86,9 @@ class phone:
     topCoverInstalled = False  
     components = []
     def installFuses(self, amount = 2):
-        if self.pcbInstalled == True:
+        if self.pcbInstalled == True and amount > 0:
             print("Installing " + str(amount) + " fuses")
-	    self.components.append('fuse')
+            self.components.append('fuse')
         else:
             print("Can not install fuses without pcb")     
     def placeBottom(self):
