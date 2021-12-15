@@ -35,7 +35,7 @@ import ActionClient
 import vision
 
 def determineFuses(command):
-        if "fuse" in command or "fuses" in command:
+    if "fuse" in command or "fuses" in command:
         commandList = command.split(" ")
         try:
             commandPlacement = commandList.index("fuse")
