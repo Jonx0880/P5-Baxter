@@ -3,7 +3,7 @@
 import time
 import sys
 import json
-import talk
+import talk as tlk
 json_file = open('data.json')
 data = json.load(json_file)
 # some_file.py
@@ -189,4 +189,4 @@ def helloBaxter(talk):
     elif any(x in talk for x in statusList):
         print "proceeding"
 	    ActionClient.current_action()
-    print(response)
+    tlk.talk(response)
