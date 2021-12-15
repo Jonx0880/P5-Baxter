@@ -124,12 +124,12 @@ def helloBaxter(talk):
     response = ""
     if any(x in talk for x in dummyphoneList):
         Phone = phone()
-	Phone.components = []
+        Phone.components = []
         Phone.placeBottom()
         Phone.installPCB(determinePcb(talk))
         Phone.installFuses(determineFuses(talk))
         Phone.placeTopCover(determineTop(talk), talk)
-	ActionClient.call_server(Phone.components)
+        ActionClient.call_server(Phone.components)
     elif any(x in talk for x in tempList):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -153,11 +153,12 @@ def helloBaxter(talk):
                     response = ("All the specs for the "+data[x]["type"] +" is width:"+data[x]["width"]+ "mm. height: "+data[x]["height"]+ "mm. Length:"
                     +data[x]["length"]+"mm color:"+data[x]["colors"]+ "weight:"+data[x]["weight"]+ " grams. material: "+data[x]["material"]+ " installation:"+data[x]["installation"]+ 
                     " Purpose:"+data[x]["purpose"])
+		tlk.talk_raw(response)
     elif any(x in talk for x in showMe):
         for x in data:
             if (data[x]["type"].lower() in talk):
                 #TODO, make baxter show component on screen and point to it
-		ik_client_example.pointAt(data[x]["type"])
+                ik_client_example.pointAt(data[x]["type"])
                 component = data[x]["type"]
                 component.replace(" ","")
                 component = component.lower()
@@ -166,27 +167,23 @@ def helloBaxter(talk):
     elif any(x in talk for x in pickUpList):
         for x in data:
             if (data[x]["type"].lower() in talk):
-		print "testing"
-		if data[x]["type"] == 'bottom cover':
-			ik_client_example.bottom_cover_pickUp()
+                if data[x]["type"] == 'bottom cover':
+                    ik_client_example.bottom_cover_pickUp()
 
-		elif data[x]["type"] == 'top cover':
-			ik_client_example.top_cover_pickUp()
-			
-		elif data[x]["type"] == 'PCB':
-			print "pick up pcb"
-			ik_client_example.PCB_pickUp()
+                elif data[x]["type"] == 'top cover':
+                    ik_client_example.top_cover_pickUp()
+                    
+                elif data[x]["type"] == 'PCB':
+                    ik_client_example.PCB_pickUp()
     elif any(x in talk for x in stopList):
-        print "Proceeding"
-	ActionClient.cancel_goal()
+        ActionClient.cancel_goal()
     elif any(x in talk for x in continueList):
-        print "Proceeding"
-	ActionClient.continue_goal()
+        ActionClient.continue_goal()
     elif any(x in talk for x in noList):
         print "Proceeding"
     elif any(x in talk for x in yesList):
         print "Proceeding"
     elif any(x in talk for x in statusList):
         print "proceeding"
-	    ActionClient.current_action()
-    tlk.talk(response)
+        ActionClient.current_action()
+    

@@ -153,6 +153,7 @@ def helloBaxter(talk):
                     response = ("All the specs for the "+data[x]["type"] +" is width:"+data[x]["width"]+ "mm. height: "+data[x]["height"]+ "mm. Length:"
                     +data[x]["length"]+"mm color:"+data[x]["colors"]+ "weight:"+data[x]["weight"]+ " grams. material: "+data[x]["material"]+ " installation:"+data[x]["installation"]+ 
                     " Purpose:"+data[x]["purpose"])
+		tlk.talk_raw(response)
     elif any(x in talk for x in showMe):
         for x in data:
             if (data[x]["type"].lower() in talk):
@@ -185,4 +186,4 @@ def helloBaxter(talk):
     elif any(x in talk for x in statusList):
         print "proceeding"
         ActionClient.current_action()
-    tlk.talk(response)
+    
