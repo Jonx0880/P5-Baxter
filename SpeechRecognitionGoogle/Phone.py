@@ -112,9 +112,9 @@ class phone:
                 color="white"
             else:
                 color=""
-                self.components.append(color+'topCover_pickUp')
-                self.components.append('topCover_assemble')
-                print("Installing top cover")
+            self.components.append(color+'topCover_pickUp')
+            self.components.append('topCover_assemble')
+            print("Installing top cover")
         else:
             print("Will not install topcover")
     
