@@ -48,7 +48,7 @@ class ActionServer:
 
 		if component[0] != 'whiteTopCover' and 'whitetopCover_pickUp' in goal.components_needed:
 			componentPresent = False
-			talk.talk('White top cover is missing please place a white top cover in the fixture')
+			talk.talk('White top cover is missing please place a white top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 #		if component[0] == 'missing' and 'whiteTopCover_pickUp' in goal.components_needed:
@@ -56,7 +56,7 @@ class ActionServer:
 		
 		if component[0] != 'blueTopCover' and 'bluetopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			talk.talk('Blue top cover is missing please place a blue top cover in the fixture')
+			talk.talk('Blue top cover is missing please place a blue top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 
 #		if component[0] == 'missing' and 'blueTopCover_pickUp' in goal.components_needed:
@@ -64,7 +64,7 @@ class ActionServer:
 
 		if  component[0] != 'blackTopCover' and 'blacktopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			talk.talk('Black top cover is missing please place a black top cover in the fixture')
+			talk.talk('Black top cover is missing please place a black top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 			

@@ -20,7 +20,7 @@ class ActionServer:
 	def execute(self, goal):
 	# Do lots of awesome groundbreaking robot stuff here
 		success = True
-		talk.talk("phoneAssembly')
+		talk.talk('phoneAssembly')
 		last_component_installed = ''
 		feedback = assemblyFeedback()
 		result = assemblyResult()

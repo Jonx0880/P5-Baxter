@@ -24,6 +24,7 @@ def feedback_cb(msg):
 
 
 def call_server(components = []):
+	talk.talk('phoneAssembly')
 	print'1'
 	goal.components_needed = []
 	feedback.last_component_installed = ''
@@ -45,7 +46,6 @@ def cancel_goal():
 	feedback.last_component_installed = 'Waiting'
 
 def continue_goal():
-	talk.talk('phoneAssembly')
 	print 'goal1'	
 	print goal.components_needed
 	print feedback.last_component_installed
