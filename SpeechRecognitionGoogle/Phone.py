@@ -46,8 +46,8 @@ def determineFuses(command):
             return 0
         elif "1" in commandList or "one" in commandList or "single" in commandList:
             return 1
-        else:
-            return 2
+    else:
+        return 2
 
 def determineTop(command):
     if "top" in command or "top cover" in command or "topcover" in command:
