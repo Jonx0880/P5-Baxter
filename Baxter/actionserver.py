@@ -20,7 +20,6 @@ class ActionServer:
 	def execute(self, goal):
 	# Do lots of awesome groundbreaking robot stuff here
 		success = True
-		talk.talk('phoneAssembly')
 		last_component_installed = ''
 		feedback = assemblyFeedback()
 		result = assemblyResult()
@@ -119,6 +118,9 @@ class ActionServer:
 				elif goal.components_needed[i] == 'topCover_assemble':
 					ik_client_example.top_cover_assemble()
 					last_component_installed = 'topCover_assemble'
+				print i, int(len(goal.components_needed))-1
+				if i == int(len(goal.components_needed))-1:
+					talk.talk("finished assembly")
 
 				feedback.last_component_installed = last_component_installed
 				self.server.publish_feedback(feedback)

@@ -21,8 +21,8 @@ print components[1]
 #print components
 #vision.send_image('/home/jimmi/ros_ws/camera_image.jpeg')
 ###### make code that checks if needed components are precent in components list #########
-#asdf = ['bottomCover_pickUp','bottomCover_assemble','PCB_pickUp', 'PCB_assemble', 'topCover_pickUp', 'topCover_assemble'] # 
-#ActionClient.call_server(asdf)
+asdf = ['bottomCover_pickUp','bottomCover_assemble','PCB_pickUp', 'PCB_assemble', 'topCover_pickUp', 'topCover_assemble'] # 
+ActionClient.call_server(asdf)
 #Phone.helloBaxter('assemble')
 
 #ActionClient.cancel_goal()

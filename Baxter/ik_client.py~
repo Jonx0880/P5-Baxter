@@ -28,7 +28,7 @@ from baxter_core_msgs.srv import (
 
 class ik_service(object):
     def __init__(self, limb, speed=0.3):
-        rospy.init_node("ik_service", anonymous=True)
+        #rospy.init_node("ik_service", anonymous=True)
         self.ns = "ExternalTools/" + limb + "/PositionKinematicsNode/IKService"
         self.iksvc = rospy.ServiceProxy(self.ns, SolvePositionIK)
 
@@ -68,6 +68,8 @@ class ik_service(object):
             self.ikreq.pose_stamp.append(pose,seed_angles=seed_angles)
         else:
             self.ikreq.pose_stamp.append(pose)
+            print "to ik client"
+	    print pose
 
         try:
             rospy.wait_for_service(self.ns, 5.0) # blocks until a service is available
@@ -95,4 +97,6 @@ class ik_service(object):
         self.arm.set_joint_positions(self.limb_joints)
         
     def ik_move_to(self, timeout=15.0):
+	print "to joint movements"
+	print self.limb_joints
         self.arm.move_to_joint_positions(self.limb_joints, timeout)

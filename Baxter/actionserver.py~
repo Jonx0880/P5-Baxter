@@ -20,7 +20,6 @@ class ActionServer:
 	def execute(self, goal):
 	# Do lots of awesome groundbreaking robot stuff here
 		success = True
-		talk.talk('phoneAssembly')
 		last_component_installed = ''
 		feedback = assemblyFeedback()
 		result = assemblyResult()
@@ -48,7 +47,7 @@ class ActionServer:
 
 		if component[0] != 'whiteTopCover' and 'whitetopCover_pickUp' in goal.components_needed:
 			componentPresent = False
-			talk.talk('White top cover is missing please place a white top cover in the fixture')
+			talk.talk('White top cover is missing please place a white top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 #		if component[0] == 'missing' and 'whiteTopCover_pickUp' in goal.components_needed:
@@ -56,7 +55,7 @@ class ActionServer:
 		
 		if component[0] != 'blueTopCover' and 'bluetopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			talk.talk('Blue top cover is missing please place a blue top cover in the fixture')
+			talk.talk('Blue top cover is missing please place a blue top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 
 #		if component[0] == 'missing' and 'blueTopCover_pickUp' in goal.components_needed:
@@ -64,7 +63,7 @@ class ActionServer:
 
 		if  component[0] != 'blackTopCover' and 'blacktopCover_pickUp' in goal.components_needed:
 			componentPresent = False			
-			talk.talk('Black top cover is missing please place a black top cover in the fixture')
+			talk.talk('Black top cover is missing please place a black top cover in fixture')
 			vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/topcover.png')
 			
 			
@@ -119,6 +118,9 @@ class ActionServer:
 				elif goal.components_needed[i] == 'topCover_assemble':
 					ik_client_example.top_cover_assemble()
 					last_component_installed = 'topCover_assemble'
+				print i, int(len(goal.components_needed))-1
+				if [i] == int(len(goal.components_needed))-1:
+					talk.talk("finished assembly")
 
 				feedback.last_component_installed = last_component_installed
 				self.server.publish_feedback(feedback)
