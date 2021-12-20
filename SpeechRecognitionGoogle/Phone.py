@@ -153,6 +153,9 @@ def helloBaxter(talk):
                     response = ("All the specs for the "+data[x]["type"] +" is width:"+data[x]["width"]+ "mm. height: "+data[x]["height"]+ "mm. Length:"
                     +data[x]["length"]+"mm color:"+data[x]["colors"]+ "weight:"+data[x]["weight"]+ " grams. material: "+data[x]["material"]+ " installation:"+data[x]["installation"]+ 
                     " Purpose:"+data[x]["purpose"])
+                break
+            else:
+                response = "I dont know anything about this component. Please try again with another component"
 		tlk.talk_raw(response)
     elif any(x in talk for x in showMe):
         for x in data:
