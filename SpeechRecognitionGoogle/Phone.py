@@ -4,10 +4,10 @@ import time
 import sys
 import json
 import talk as tlk
-json_file = open('data.json')
+json_file = open('data.json') #Knowledge database
 data = json.load(json_file)
-# some_file.py
 import sys
+
 #This list below is all the phrases that can be used to get information about a specific component
 dummyphoneList = ["assemble a dummyphone", "assemble dummyphone", "assemble the dummyphone", "make a phone", "do a demo", "do a demonstration", "assemble a phone", "assemble phone"]
 specsList = ["tell me about","talk about", "specifications", "specs"] 
