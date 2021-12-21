@@ -7,16 +7,20 @@ import pyaudio
 from six.moves import queue
 import TCP_client
 
+
+'''
+You have to sign up at google API to use this script. Lots of great tutorials available online. You need to make a json file with your private token. 
+DO NOT PUSH THAT TOKEN TO GITHUB.
+'''
 #Open Windows Power Shell and write below
-#$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\victo\Desktop\P5-Baxter\SpeechRecognitionGoogle\warm-ring-329409-5670d8a20123.json"
-#then run this python script
+#then run this python script (In my, Victors, case:)
  #$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\victo\Desktop\P5-Baxter\SpeechRecognitionGoogle\baxtervoice-ed6f37715517.json"
 
-# Audio recording parameters
+# Audio recording parameters (Standard google stuff, from tutorial)
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-
+#This is just how the API is used
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
 
@@ -29,7 +33,7 @@ class MicrophoneStream(object):
         self.closed = True
 
     def __enter__(self):
-        self._audio_interface = pyaudio.PyAudio()
+        self._audio_interface = pyaudio.PyAudio() #Setting pyaudio.PyAudio as interface
         self._audio_stream = self._audio_interface.open(
             format=pyaudio.paInt16,
             # The API currently only supports 1-channel (mono) audio
@@ -47,7 +51,7 @@ class MicrophoneStream(object):
         self.closed = False
 
         return self
-
+    #Close function
     def __exit__(self, type, value, traceback):
         self._audio_stream.stop_stream()
         self._audio_stream.close()
@@ -81,7 +85,6 @@ class MicrophoneStream(object):
                     data.append(chunk)
                 except queue.Empty:
                     break
-
             yield b"".join(data)
 
 
@@ -123,17 +126,21 @@ def listen_print_loop(responses):
         overwrite_chars = " " * (num_chars_printed - len(transcript))
 
         if not result.is_final:
+            #If sentence is not done, it will still write words it hears real time
             sys.stdout.write(transcript + overwrite_chars + "\r")
             sys.stdout.flush()
 
             num_chars_printed = len(transcript)
 
         else:
+            #Prints the entire finished sentence
             print(transcript + overwrite_chars)
+            #Checks if "hello baxter" is in sentence. Runs tcp_client if it is
             if ("hello baxter" in transcript.lower()):
                 print(transcript)
                 TCP_client.sendData(transcript)
             elif ("switch" in transcript.lower() and "text" in transcript.lower()):
+                #Checks if it is asked to switch to text instead, and will run the function called textBased
                 textBased()
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
@@ -143,8 +150,10 @@ def listen_print_loop(responses):
 
             num_chars_printed = 0
 def textBased():
+    #Print a lot of blank lines, and a welcome messege
     print("\n\n\n\n\n\n\n\n\n\nHello I am Baxter. \n")
     while True:
+        #Will forever loop, and wait for a messege from user. Will send this messege to TCP_client, unless it is asked to switch to voice. In that case it will stop the loop.
         transcript = input("What do you want me to do? \n")
         if ("switch" in transcript and "voice" in transcript):
             return False
@@ -154,18 +163,17 @@ def main():
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
     language_code = "en-US"  # a BCP-47 language tag
-
+    #Setting up client and configurations
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=RATE,
         language_code=language_code,
     )
-
+    #Enables streaming and interim(temporary) results, like mentioned earlier.
     streaming_config = speech.StreamingRecognitionConfig(
         config=config, interim_results=True
     )
-
     with MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
         requests = (
