@@ -20,6 +20,7 @@ PYTHON3 computer start:
 Ubuntu 14 computer start:
 
 First step is to use the baxter.sh script in the terminal to setup the environment for communicating with baxter (make sure baxter ip and your ip are correct in the script)
+
 The first script needs to be launched in a terminal where the baxter.sh script has been used. The script is started using rosrun baxter_tools actionserver.py
 
 In a second terminal again run the baxter.sh script. Then go to the SpeechRecognitionGoogle folder and use rosrun baxter_tools TCP_server.py
