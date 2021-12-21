@@ -16,6 +16,7 @@ from ik_client import ik_service
 
 import time
 
+# function converting from cartecian(euler) orientation to quaternions
 def euler_to_quaternion(roll, pitch, yaw): #x, y, z
 
         qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
@@ -25,64 +26,67 @@ def euler_to_quaternion(roll, pitch, yaw): #x, y, z
 
         return [qx, qy, qz, qw] 
 
+# class for moving baxter (should have been a function)
 class ik_move:
+        # needs an input of which limb to move, and which coordinates and orientation to move to
 	def __init__(self,limb , PosX, PosY, PosZ, RotX, RotY, RotZ, RotW):
-
+                # makes an ik_service object from the ik_client script. including which limb used and how fast it should move
 		ik = ik_service(limb, speed=0.3)
-		#print (euler_to_quaternion(0,0,20))
+		
 	
 		# Creates empty lists
 		movements = []
 		
-		# The values can be easily copied from the command:
-		
+		# The values for baxters current position can be found from the command:
 		# rostopic echo /robot/limb/<left/right>/endpoint_state/pose -n 1 -p
 		
-		# Store position in list
+		# Store position and orientation in list
 		movements.append([PosX,PosY,PosZ,
 				   RotX,RotY,RotZ,RotW])
 		
 		
 		
-		#
-		# Goes through the lists commanding the robot
-		#
-		
+		# Goes through the list commanding the robot
 		for mv_i in movements:
 		    if not ik.ik_call(mv_i[:3], mv_i[3:]):
 		        ik.ik_move_to(timeout=15)
 		    else:
 		        print ("IK returned an error...")
+
+#class for controling the gripper (should have been a function)
 class gripper:
+        #takes input of which limb, and 1 or 0 if it should be closed or opened
 	def __init__(self,limb,grip):
+                #sets parameters
 		gripper_force_threshold = 30 # in percentage
 		gripper_vacuum_threshold = 18 # in percentage
 
 	
 		# checks which gripper type is attached to the given limb
 		gripper = baxter_interface.Gripper(limb)
-	
-		print ("Using the " + gripper.type() + " gripper.")
-	
+
+                # checks the gripper type
 		if gripper.type() == 'electric':
+                        # if electric gripper is used calibarate it
 			print ("Calibrating the electric gripper")
 			gripper.calibrate()
 			gripper.set_holding_force(gripper_force_threshold)
 		else:
+                        # set vacum gripper parameters
 			gripper.set_vacuum_threshold(gripper_vacuum_threshold)
 			gripper.set_blow_off(0.4)
 	
-		print ("Gripper parameters: ",gripper.parameters())
+		# sleep 0.5 seconds (vacum gripper does not work if we dont wait)
 		time.sleep(0.5)
+		# open or close based on input. (0 or 1)
 		if grip == 1:
 			gripper.close(False,50)	
 		elif grip == 0:
 			gripper.open()
 def PCB_pickUp():
-	print "picking up pcb"
 	ik_move('left', 0.668666615156,0.159488855161,0.10,0.0,1.0,0.0,0.0) # Above pcb
 	ik_move('left', 0.660130532232,0.160065985279,0.0380676342796,0,1.0,0,0) # on pcb ready to pick up
-	gripper('left',1)	
+	gripper('left',1) #close the left gripper	
 	time.sleep(0.3)
 	ik_move('left', 0.668666615156,0.159488855161,0.10,0.0,1.0,0.0,0.0) # above pcb
 
@@ -93,7 +97,7 @@ def PCB_assemble():
 	ik_move('left', 0.564383557023,-0.045235812403,0.0623267765158,0.713801016942,0.693439129467,-0.0608133789334,0.0770195746494) # assembly (PCB)
 	ik_move('left', 0.564383557023,-0.037235812403,0.0483267765158,0.713801016942,0.693439129467,-0.0608133789334,0.0770195746494) # assembly2(PCB)
 	#time.sleep(0.5)
-	gripper('left',0)
+	gripper('left',0) # open the left gripper
 	#time.sleep(1)
 	ik_move('left', 0.565135933659,-0.0635259045333,0.10,0.67,0.740,0.0,0.0) # above assembly (PCB)
 	#time.sleep(1)
@@ -167,9 +171,5 @@ def cameraPos():
 
 
 #ik_move('left', 0.564383557023,-0.037235812403,0.0483267765158,0.713801016942,0.693439129467,-0.0608133789334,0.0770195746494)
-
-
-print (euler_to_quaternion(0,0,0))
-
 
 
