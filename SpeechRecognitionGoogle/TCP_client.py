@@ -1,6 +1,7 @@
 import socket
 import sys
 def sendData(speech):
+    #set ip of computer running the server
     HOST, PORT = "172.20.66.61", 50007
     data = "".join(sys.argv[1:])
 
