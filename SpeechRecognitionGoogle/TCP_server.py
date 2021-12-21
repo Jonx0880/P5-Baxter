@@ -39,6 +39,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         self.request.sendall(self.data)
  
 if __name__ == "__main__":
+    #set the ip of the computer running the server
     HOST, PORT = "172.20.66.61", 50007
     
     # Create the server, binding to localhost on port 9999
