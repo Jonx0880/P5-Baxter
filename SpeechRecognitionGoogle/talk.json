@@ -14,5 +14,6 @@
     "PCB_pickUp":"I am picking up the PCB",
     "PCB_assemble":"I am installing the PCB",
     "not doing anything":"I am not doing anything at the moment",
-    "phoneAssembly":"I will now try to assemble a phone"
+    "phoneAssembly":"I will now try to assemble a phone",
+    "finished assembly":"I have finished assembleing the phone"
 }
