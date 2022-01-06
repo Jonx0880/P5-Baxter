@@ -1,18 +1,49 @@
-import socket
+#!/usr/bin/env python
+
+import SocketServer
+
+import rospy
 import sys
-def sendData(speech):
-    #set ip of computer running the server
-    HOST, PORT = "172.20.66.61", 50007
-    data = "".join(sys.argv[1:])
+sys.path.append('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter')
 
-    # Create a socket (SOCK_STREAM means a TCP socket)
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        # Connect to server and send data
-        sock.connect((HOST, PORT))
-        sock.sendall(bytes(data + speech + "\n", "utf-8"))
+import vision
 
-        # Receive data from the server and shut down
-        received = str(sock.recv(1024), "utf-8")
+try:
+	print'trying'
+	rospy.init_node('action_client')
+except rospy.ROSInterruptException as e:
+	print 'something went wrong with: ', e 
+	print'except'
 
-    print("Sent:     {}".format(data))
-    print("Received: {}".format(received))
+import Phone
+
+class MyTCPHandler(SocketServer.BaseRequestHandler):
+    """
+    The request handler class for our server.
+ 
+    It is instantiated once per connection to the server, and must
+    override the handle() method to implement communication to the
+    client.
+    """
+ 
+    def handle(self):
+	print'handle'
+        # self.request is the TCP socket connected to the client
+        self.data = self.request.recv(1024).strip()
+        print "{} wrote:".format(self.client_address[0])
+        print self.data
+	vision.send_image('/home/jimmi/ros_ws/src/baxter_tools/scripts/P5-Baxter/Baxter/img/face.png')
+	Phone.helloBaxter(self.data)
+	
+        # just send back the same data, but upper-cased
+        self.request.sendall(self.data)
+ 
+if __name__ == "__main__":
+    HOST, PORT = "172.20.66.32", 50007
+    
+    # Create the server, binding to localhost on port 9999
+    server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
+ 
+    # Activate the server; this will keep running until you
+    # interrupt the program with Ctrl-C
+server.serve_forever()
